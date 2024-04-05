@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native';
 
-const CheckIn = () => {
+const ScanQR = () => {
   return (
     <View>
       <Text>Check in</Text>
@@ -8,4 +8,4 @@ const CheckIn = () => {
   );
 };
 
-export default CheckIn;
+export default ScanQR;
