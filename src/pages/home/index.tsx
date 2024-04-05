@@ -1,7 +1,7 @@
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { FC, useCallback } from 'react';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
 
 import { Color, FontFamily, Screen } from '../../common/constants';
 import { HcButton } from '../../components/button';
@@ -29,21 +29,24 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
     return null;
   }
 
-  return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
+  const renderHeader = () => {
+    return (
       <View style={styles.header}>
         <View style={styles.headerCircleTopRight} />
         <View style={styles.headerCircleBottomLeft} />
         <Text style={styles.headerTitle}>Jio Health</Text>
       </View>
-      <View style={styles.content}>
-        <HcInput label="Full name" />
-        <HcInput label="Phone" />
+    );
+  };
+
+  const renderCtaContainer = () => {
+    return (
+      <View style={styles.ctaContainer}>
         <HcButton
           title="Book"
           type="Primary"
           onPress={() => {
-            Alert.alert('hello');
+            navigation.push(Screen.DETAILS);
           }}
           style={styles.bookButton}
         />
@@ -56,6 +59,26 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
           style={styles.checkinButton}
         />
       </View>
+    );
+  };
+
+  const renderContent = () => {
+    return (
+      <ScrollView contentContainerStyle={{ width: Dimensions.get('window').width, flexGrow: 1 }}>
+        <View style={styles.content}>
+          <HcInput label="Full name" />
+          <HcInput label="Phone" />
+
+          {renderCtaContainer()}
+        </View>
+      </ScrollView>
+    );
+  };
+
+  return (
+    <View style={styles.container} onLayout={onLayoutRootView}>
+      {renderHeader()}
+      {renderContent()}
     </View>
   );
 };
@@ -110,16 +133,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     display: 'flex',
     alignItems: 'center',
-    flexDirection: 'column',
     borderRadius: 8,
+    flexGrow: 1,
+    position: 'relative',
+    paddingBottom: 120,
+    backgroundColor: 'green',
   },
   bookButton: {
     width: 180,
-    marginTop: 20,
     marginBottom: 10,
   },
   checkinButton: {
     width: 180,
+  },
+  ctaContainer: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 0,
+    backgroundColor: 'blue',
   },
 });
 

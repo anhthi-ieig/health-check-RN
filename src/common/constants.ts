@@ -37,3 +37,15 @@ export enum FontFamily {
   COMFORTAA = 'Comfortaa',
   PACIFICO = 'Pacifico',
 }
+
+export enum zIndex {
+  z100 = 100,
+  z200 = 200,
+  z300 = 300,
+  z400 = 400,
+  z500 = 500,
+  z600 = 600,
+  z700 = 700,
+  z800 = 800,
+  z900 = 900,
+}
