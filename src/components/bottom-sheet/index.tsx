@@ -1,9 +1,9 @@
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
 import { FC, ReactNode, useCallback, useMemo, useRef, useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 
-import ArrowDownIcon from '../../../assets/icons/arrow-down.svg';
 import { styles } from './styled';
+import ArrowDownIcon from '../../../assets/icons/arrow-down.svg';
 import { HcText } from '../text';
 
 export type HcBottomSheetItem = {

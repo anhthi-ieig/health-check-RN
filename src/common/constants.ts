@@ -6,6 +6,7 @@ export enum Screen {
 
 export enum Spacing {
   PADDING_HORIZONTAL = 18,
+  BETWEEN_ELEMENTS = 25,
 }
 
 export enum Color {

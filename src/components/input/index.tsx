@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Text, TextInput, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 
 import { styles } from './styled';
 import { HcText } from '../text';

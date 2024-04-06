@@ -9,6 +9,7 @@ import { contentStyles, headerStyles, screenStyles } from './styled';
 import { Screen } from '../../common/constants';
 import { HcBottomSheet } from '../../components/bottom-sheet';
 import { HcButton } from '../../components/button';
+import { HcDateTimePicker } from '../../components/date-time-picker';
 import { HcInput } from '../../components/input';
 
 interface IHomeProps {
@@ -38,7 +39,10 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
       <View style={headerStyles.container}>
         <View style={headerStyles.headerCircleTopRight} />
         <View style={headerStyles.headerCircleBottomLeft} />
-        <Text style={headerStyles.headerTitle}>Jio Health</Text>
+        <View style={headerStyles.headerTitleContainer}>
+          <Text style={headerStyles.headerTitle}>Jio Health</Text>
+          <Text style={headerStyles.headerSubTitle}>Achieve Optimal Wellness</Text>
+        </View>
       </View>
     );
   };
@@ -78,6 +82,10 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
             items={ClinicLocations}
             value={ClinicLocations[0]}
           />
+          <View style={contentStyles.dateTimeContainer}>
+            <HcDateTimePicker mode="date" label="Date" value={new Date()} />
+            <HcDateTimePicker mode="time" label="Time" value={new Date()} />
+          </View>
           {renderCtaContainer()}
         </View>
       </ScrollView>

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 import { Color, FontFamily, FontSize } from '../../common/constants';
 import { HcButton } from '../../components/button';

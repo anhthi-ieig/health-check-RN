@@ -1,13 +1,13 @@
 import { StyleSheet } from 'react-native';
 
-import { Color, FontFamily, FontSize, Spacing } from '../../common/constants';
+import { Color, FontSize, Spacing } from '../../common/constants';
 
 export const styles = StyleSheet.create({
   container: {
     width: '100%',
+    marginBottom: Spacing.BETWEEN_ELEMENTS,
   },
   label: {
-    fontFamily: FontFamily.COMFORTAA,
     color: Color.Light8,
     fontWeight: '400',
     fontSize: FontSize.Md,

@@ -25,11 +25,22 @@ export const headerStyles = StyleSheet.create({
     position: 'relative',
     overflow: 'hidden',
   },
+  headerTitleContainer: {
+    marginBottom: -40,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   headerTitle: {
     fontFamily: FontFamily.PACIFICO,
-    color: '#fff',
+    color: Color.WHITE,
     fontSize: 28,
-    marginBottom: -40,
+    flexWrap: 'nowrap',
+    textAlign: 'center',
+  },
+  headerSubTitle: {
+    textAlign: 'center',
+    color: Color.WHITE,
   },
   headerCircleTopRight: {
     width: 300,
@@ -61,7 +72,12 @@ export const contentStyles = StyleSheet.create({
     borderRadius: 8,
     flexGrow: 1,
     position: 'relative',
-    paddingBottom: 170,
+    paddingBottom: 200,
+  },
+  dateTimeContainer: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
   },
   ctaContainer: {
     width: '100%',

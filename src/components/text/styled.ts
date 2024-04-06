@@ -5,5 +5,6 @@ import { FontFamily } from '../../common/constants';
 export const styles = StyleSheet.create({
   text: {
     fontFamily: FontFamily.COMFORTAA,
+    flexWrap: 'nowrap',
   },
 });
