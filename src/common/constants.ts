@@ -4,6 +4,10 @@ export enum Screen {
   SCAN_QR = 'Scan QR',
 }
 
+export enum Spacing {
+  PADDING_HORIZONTAL = 18,
+}
+
 export enum Color {
   PRIMARY = '#10ac84',
   PRIMARY_LIGHT = '#1dd1a1',

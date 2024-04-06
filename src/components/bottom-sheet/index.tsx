@@ -1,51 +1,78 @@
-import { BottomSheetModal, BottomSheetView, BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { useCallback, useMemo, useRef } from 'react';
-import { Button, StyleSheet, Text } from 'react-native';
+import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import { FC, useCallback, useMemo, useRef, useState } from 'react';
+import { Pressable, Text, View } from 'react-native';
 
-import { zIndex } from '../../common/constants';
+import { styles } from './styled';
+import { HcText } from '../text';
 
-export const HcBottomSheet = () => {
+export type HcBottomSheetItem = {
+  label: string;
+  value: string;
+};
+
+interface HcBottomSheetProps {
+  label: string;
+  value: HcBottomSheetItem;
+  items: HcBottomSheetItem[];
+  bottomSheetViewLabel?: string;
+  onSelectItem?: (item: HcBottomSheetItem) => void;
+}
+
+export const HcBottomSheet: FC<HcBottomSheetProps> = ({
+  label,
+  value,
+  items = [],
+  bottomSheetViewLabel,
+  onSelectItem,
+}) => {
+  const [selectedItem, setSelectedItem] = useState<HcBottomSheetItem>(value);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const snapPoints = useMemo(() => ['60%'], []);
+  const snapPoints = useMemo(() => ['40%'], []);
 
-  const handlePresentModalPress = useCallback(() => {
+  const openBottomSheet = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
 
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
+  const closeBottomSheet = useCallback(() => {
+    bottomSheetModalRef.current?.dismiss();
   }, []);
 
+  const handleSelectItem = (item: HcBottomSheetItem) => {
+    setSelectedItem(item);
+    onSelectItem?.(item);
+    closeBottomSheet();
+  };
+
+  const renderBackdrop = useCallback(
+    (props: any) => <BottomSheetBackdrop appearsOnIndex={0} disappearsOnIndex={-1} {...props} />,
+    [],
+  );
+
   return (
-    <BottomSheetModalProvider>
-      <Button onPress={handlePresentModalPress} title="Present Modal" color="black" />
+    <View style={styles.container}>
+      <HcText style={styles.label}>{label}</HcText>
+      <Pressable onPress={openBottomSheet}>
+        <View style={styles.dropdown}>
+          <HcText>{selectedItem?.label || 'Select an option'}</HcText>
+        </View>
+      </Pressable>
       <BottomSheetModal
-        ref={bottomSheetModalRef}
         index={0}
+        ref={bottomSheetModalRef}
         snapPoints={snapPoints}
-        onChange={handleSheetChanges}
-        style={styles.bottomSheetModal}>
-        <BottomSheetView>
-          <Text>Awesome 🎉</Text>
+        backdropComponent={renderBackdrop}>
+        <BottomSheetView style={styles.bottomSheetView}>
+          <HcText style={styles.bottomSheetViewLabel}>{bottomSheetViewLabel}</HcText>
+          {items.map((item) => (
+            <Pressable
+              key={item.value}
+              onPress={() => handleSelectItem(item)}
+              style={styles.bottomSheetViewItem}>
+              <HcText style={{ fontWeight: 'bold' }}>{item.label}</HcText>
+            </Pressable>
+          ))}
         </BottomSheetView>
       </BottomSheetModal>
-    </BottomSheetModalProvider>
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  bottomSheetModal: {
-    position: 'absolute',
-    zIndex: zIndex.z500,
-    backgroundColor: 'red',
-  },
-  dropdown: {
-    width: '100%',
-    height: 48,
-    borderWidth: 2,
-    borderStyle: 'solid',
-    borderColor: '#a3ffd1',
-    backgroundColor: '#e1f7ec',
-    borderRadius: 6,
-  },
-});

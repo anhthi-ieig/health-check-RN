@@ -1,8 +1,9 @@
 import { FC } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 import { Color, FontFamily, FontSize } from '../../common/constants';
 import { HcButton } from '../../components/button';
+import { HcText } from '../../components/text';
 
 interface IScanQRProps {
   navigation: any;
@@ -12,7 +13,7 @@ const ScanQR: FC<IScanQRProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Scan QR</Text>
+        <HcText style={styles.headerTitle}>Scan QR</HcText>
       </View>
       <View style={styles.footer}>
         <HcButton

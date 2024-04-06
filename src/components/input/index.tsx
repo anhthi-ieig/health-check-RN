@@ -1,7 +1,8 @@
 import { FC } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { Text, TextInput, View } from 'react-native';
 
-import { Color, FontFamily, FontSize } from '../../common/constants';
+import { styles } from './styled';
+import { HcText } from '../text';
 
 interface IHcInputProps {
   label: string;
@@ -10,33 +11,8 @@ interface IHcInputProps {
 export const HcInput: FC<IHcInputProps> = ({ label }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+      <HcText style={styles.label}>{label}</HcText>
       <TextInput style={styles.input} />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'flex-start',
-    marginBottom: 20,
-  },
-  label: {
-    fontFamily: FontFamily.COMFORTAA,
-    color: Color.Light8,
-    fontWeight: '400',
-    fontSize: FontSize.Md,
-  },
-  input: {
-    height: 48,
-    borderWidth: 2,
-    borderStyle: 'solid',
-    borderColor: '#a3ffd1',
-    backgroundColor: '#e1f7ec',
-    borderRadius: 6,
-    marginTop: 6,
-    paddingHorizontal: 12,
-  },
-});

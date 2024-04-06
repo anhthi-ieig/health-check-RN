@@ -3,6 +3,7 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 
 import { Color, FontFamily, FontSize } from '../../common/constants';
 import { HcButton } from '../../components/button';
+import { HcText } from '../../components/text';
 
 interface IDetailsProps {
   navigation: any;
@@ -12,7 +13,7 @@ const Details: FC<IDetailsProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Booking Details</Text>
+        <HcText style={styles.headerTitle}>Booking Details</HcText>
       </View>
       <View style={styles.footer}>
         <HcButton
