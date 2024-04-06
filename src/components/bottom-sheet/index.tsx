@@ -1,13 +1,15 @@
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
-import { FC, useCallback, useMemo, useRef, useState } from 'react';
+import { FC, ReactNode, useCallback, useMemo, useRef, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
 
+import ArrowDownIcon from '../../../assets/icons/arrow-down.svg';
 import { styles } from './styled';
 import { HcText } from '../text';
 
 export type HcBottomSheetItem = {
   label: string;
   value: string;
+  icon?: ReactNode;
 };
 
 interface HcBottomSheetProps {
@@ -53,7 +55,8 @@ export const HcBottomSheet: FC<HcBottomSheetProps> = ({
       <HcText style={styles.label}>{label}</HcText>
       <Pressable onPress={openBottomSheet}>
         <View style={styles.dropdown}>
-          <HcText>{selectedItem?.label || 'Select an option'}</HcText>
+          <HcText style={styles.dropdownLabel}>{selectedItem?.label || 'Select an option'}</HcText>
+          <ArrowDownIcon />
         </View>
       </Pressable>
       <BottomSheetModal
@@ -68,7 +71,10 @@ export const HcBottomSheet: FC<HcBottomSheetProps> = ({
               key={item.value}
               onPress={() => handleSelectItem(item)}
               style={styles.bottomSheetViewItem}>
-              <HcText style={{ fontWeight: 'bold' }}>{item.label}</HcText>
+              {item.icon}
+              <HcText style={{ fontWeight: 'bold', ...styles.bottomSheetViewItemLabel }}>
+                {item.label}
+              </HcText>
             </Pressable>
           ))}
         </BottomSheetView>

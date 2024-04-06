@@ -21,8 +21,13 @@ export const styles = StyleSheet.create({
     backgroundColor: '#e1f7ec',
     borderRadius: 6,
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
     paddingHorizontal: 12,
+  },
+  dropdownLabel: {
+    flexWrap: 'nowrap',
   },
   bottomSheetView: {
     paddingVertical: 18,
@@ -34,6 +39,14 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
   },
   bottomSheetViewItem: {
-    marginVertical: 8,
+    marginVertical: 10,
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  bottomSheetViewItemLabel: {
+    flexWrap: 'nowrap',
+    marginLeft: 10,
   },
 });
