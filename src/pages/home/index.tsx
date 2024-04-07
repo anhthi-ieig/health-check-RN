@@ -3,8 +3,8 @@ import dayjs from 'dayjs';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { FC, useCallback } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { View, Text, ScrollView, Dimensions } from 'react-native';
+import { Controller, useForm } from 'react-hook-form';
+import { Dimensions, ScrollView, Text, View } from 'react-native';
 
 import { ClinicLocations } from './fixtures';
 import { contentStyles, headerStyles, screenStyles } from './styled';
@@ -13,12 +13,13 @@ import { HcBottomSheet, HcBottomSheetItem } from '../../components/bottom-sheet'
 import { HcButton } from '../../components/button';
 import { HcDateTimePicker } from '../../components/date-time-picker';
 import { HcInput } from '../../components/input';
+import { createBooking, transformBookingInfo } from '../api/create-booking';
 
 interface IHomeProps {
   navigation: any;
 }
 
-type InputForm = {
+export type InputForm = {
   name: string;
   phone: string;
   location: HcBottomSheetItem;
@@ -56,8 +57,16 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
   }
 
   const handleFormSubmit = (data: InputForm) => {
+    console.log('data:', data);
     console.log(dayjs(data.date).format('YYYY-MM-DD'));
     console.log(dayjs(data.time).format('HH:mm'));
+    createBooking(transformBookingInfo(data))
+      .then((resp) => {
+        if (resp?.id) navigation.navigate(Screen.DETAILS, resp);
+      })
+      .catch((err) => {
+        console.log('err:', err);
+      });
   };
 
   const renderHeader = () => {
