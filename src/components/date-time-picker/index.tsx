@@ -1,5 +1,6 @@
 import DateTimePicker, {
   AndroidNativeProps,
+  DateTimePickerEvent,
   IOSNativeProps,
   WindowsNativeProps,
 } from '@react-native-community/datetimepicker';
@@ -13,17 +14,33 @@ type PureDateTimePickerProps = IOSNativeProps | AndroidNativeProps | WindowsNati
 type HcDateTimePickerProps = PureDateTimePickerProps & {
   label: string;
   width?: number;
+  mode: 'date' | 'time';
+  onChange?: (date?: Date) => void;
 };
 
 export const HcDateTimePicker: FC<HcDateTimePickerProps> = ({
-  width = Dimensions.get('window').width / 2,
   label,
+  width = Dimensions.get('window').width / 2,
+  mode,
+  value,
+  onChange,
   ...restProps
 }) => {
+  const handleChange = (_: DateTimePickerEvent, date: Date | undefined) => {
+    onChange?.(date);
+  };
+
   return (
     <View style={{ ...styles.container, width }}>
       <HcText style={styles.label}>{label}</HcText>
-      <DateTimePicker {...restProps} value={new Date()} style={styles.dateTimePicker} />
+      <DateTimePicker
+        {...restProps}
+        mode={mode}
+        display="calendar"
+        value={value}
+        onChange={handleChange}
+        style={styles.dateTimePicker}
+      />
     </View>
   );
 };

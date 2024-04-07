@@ -13,6 +13,7 @@ export enum Color {
   PRIMARY = '#10ac84',
   PRIMARY_LIGHT = '#1dd1a1',
   WHITE = '#ffffff',
+  RED = '#ff4c30',
 
   Light1 = '#eff1f7',
   Light2 = '#e6e8f0',

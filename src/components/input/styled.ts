@@ -24,4 +24,9 @@ export const styles = StyleSheet.create({
     marginTop: 6,
     paddingHorizontal: 12,
   },
+  error: {
+    color: Color.RED,
+    fontStyle: 'italic',
+    marginTop: 6,
+  },
 });

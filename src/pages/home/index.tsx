@@ -1,13 +1,15 @@
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import dayjs from 'dayjs';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { FC, useCallback } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import { View, Text, ScrollView, Dimensions } from 'react-native';
 
 import { ClinicLocations } from './fixtures';
 import { contentStyles, headerStyles, screenStyles } from './styled';
 import { Screen } from '../../common/constants';
-import { HcBottomSheet } from '../../components/bottom-sheet';
+import { HcBottomSheet, HcBottomSheetItem } from '../../components/bottom-sheet';
 import { HcButton } from '../../components/button';
 import { HcDateTimePicker } from '../../components/date-time-picker';
 import { HcInput } from '../../components/input';
@@ -16,9 +18,28 @@ interface IHomeProps {
   navigation: any;
 }
 
+type InputForm = {
+  name: string;
+  phone: string;
+  location: HcBottomSheetItem;
+  date: Date;
+  time: Date;
+};
+
 SplashScreen.preventAutoHideAsync();
 
 const Home: FC<IHomeProps> = ({ navigation }) => {
+  const { control, handleSubmit } = useForm<InputForm>({
+    reValidateMode: 'onSubmit',
+    defaultValues: {
+      name: '',
+      phone: '',
+      location: ClinicLocations[0],
+      date: new Date(),
+      time: new Date(),
+    },
+  });
+
   const [fontsLoaded, fontError] = useFonts({
     Comfortaa: require('../../../assets/fonts/Comfortaa.ttf'),
     Pacifico: require('../../../assets/fonts/Pacifico.ttf'),
@@ -34,6 +55,11 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
     return null;
   }
 
+  const handleFormSubmit = (data: InputForm) => {
+    console.log(dayjs(data.date).format('YYYY-MM-DD'));
+    console.log(dayjs(data.time).format('HH:mm'));
+  };
+
   const renderHeader = () => {
     return (
       <View style={headerStyles.container}>
@@ -47,15 +73,93 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
     );
   };
 
+  const renderContent = () => {
+    return (
+      <ScrollView contentContainerStyle={{ width: Dimensions.get('window').width, flexGrow: 1 }}>
+        <View style={contentStyles.container}>
+          <Controller
+            name="name"
+            control={control}
+            rules={{ required: 'This is required' }}
+            render={({ field, fieldState }) => (
+              <HcInput
+                label="Name"
+                value={field.value}
+                onChange={field.onChange}
+                error={fieldState.error?.message}
+              />
+            )}
+          />
+          <Controller
+            name="phone"
+            control={control}
+            rules={{ required: 'This is required' }}
+            render={({ field, fieldState }) => (
+              <HcInput
+                label="Phone"
+                value={field.value}
+                onChange={field.onChange}
+                error={fieldState.error?.message}
+              />
+            )}
+          />
+          <Controller
+            name="location"
+            control={control}
+            render={({ field }) => (
+              <HcBottomSheet
+                label="Location"
+                bottomSheetViewLabel="Choose a location"
+                items={ClinicLocations}
+                value={field.value}
+                onSelectItem={field.onChange}
+              />
+            )}
+          />
+          <View style={contentStyles.dateTimeContainer}>
+            <Controller
+              name="date"
+              control={control}
+              render={({ field }) => (
+                <HcDateTimePicker
+                  mode="date"
+                  label="Date"
+                  value={field.value}
+                  minimumDate={dayjs().add(1, 'day').toDate()}
+                  maximumDate={dayjs().add(15, 'days').toDate()}
+                  onChange={field.onChange}
+                />
+              )}
+            />
+            <Controller
+              name="time"
+              control={control}
+              render={({ field }) => (
+                <HcDateTimePicker
+                  mode="time"
+                  label="Time"
+                  value={field.value}
+                  minimumDate={dayjs().startOf('day').add(7, 'hour').toDate()}
+                  maximumDate={dayjs().startOf('day').add(18, 'hour').toDate()}
+                  minuteInterval={30}
+                  onChange={field.onChange}
+                />
+              )}
+            />
+          </View>
+          {renderCtaContainer()}
+        </View>
+      </ScrollView>
+    );
+  };
+
   const renderCtaContainer = () => {
     return (
       <View style={contentStyles.ctaContainer}>
         <HcButton
           title="Book"
           type="Primary"
-          onPress={() => {
-            navigation.push(Screen.DETAILS);
-          }}
+          onPress={handleSubmit(handleFormSubmit)}
           style={contentStyles.bookButton}
         />
         <HcButton
@@ -67,28 +171,6 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
           style={contentStyles.checkinButton}
         />
       </View>
-    );
-  };
-
-  const renderContent = () => {
-    return (
-      <ScrollView contentContainerStyle={{ width: Dimensions.get('window').width, flexGrow: 1 }}>
-        <View style={contentStyles.container}>
-          <HcInput label="Full name" />
-          <HcInput label="Phone" />
-          <HcBottomSheet
-            label="Location"
-            bottomSheetViewLabel="Choose a location"
-            items={ClinicLocations}
-            value={ClinicLocations[0]}
-          />
-          <View style={contentStyles.dateTimeContainer}>
-            <HcDateTimePicker mode="date" label="Date" value={new Date()} />
-            <HcDateTimePicker mode="time" label="Time" value={new Date()} />
-          </View>
-          {renderCtaContainer()}
-        </View>
-      </ScrollView>
     );
   };
 
