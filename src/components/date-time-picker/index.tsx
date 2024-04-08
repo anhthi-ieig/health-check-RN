@@ -38,8 +38,10 @@ export const HcDateTimePickerIOS: FC<HcDateTimePickerProps> = ({
       <DateTimePicker
         {...restProps}
         mode={mode}
-        display="calendar"
         value={value}
+        display="calendar"
+        minimumDate={restProps.minimumDate}
+        maximumDate={restProps.maximumDate}
         onChange={handleChange}
         style={styles.dateTimePickerIOS}
       />

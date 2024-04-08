@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { Color, FontFamily, Spacing } from '../../common/constants';
+import { Color, FontFamily, Spacing, zIndex } from '../../common/constants';
 
 export const screenStyles = StyleSheet.create({
   container: {
@@ -59,6 +59,17 @@ export const headerStyles = StyleSheet.create({
     left: -120,
     borderRadius: 180,
     backgroundColor: Color.PRIMARY_LIGHT,
+  },
+  settingsContainer: {
+    width: 40,
+    height: 40,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 50,
+    right: 12,
+    zIndex: zIndex.z200,
   },
 });
 

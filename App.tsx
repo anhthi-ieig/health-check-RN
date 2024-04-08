@@ -6,6 +6,7 @@ import { Screen } from './src/common/constants';
 import Details from './src/pages/details';
 import Home from './src/pages/home';
 import ScanQR from './src/pages/scan-qr';
+import { Settings } from './src/pages/settings';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,11 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen name={Screen.SCAN_QR} component={ScanQR} options={{ headerShown: false }} />
+          <Stack.Screen
+            name={Screen.SETTINGS}
+            component={Settings}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>

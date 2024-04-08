@@ -2,6 +2,7 @@ export enum Screen {
   HOME = 'Home',
   DETAILS = 'Details',
   SCAN_QR = 'Scan QR',
+  SETTINGS = 'Settings',
 }
 
 export enum Spacing {

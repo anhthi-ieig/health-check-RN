@@ -1,15 +1,16 @@
 ### Features for demo
 
+- Types of components (Text, TextInput, DateTimePicker, Custom BottomSheet)
 - ScrollView
 - Validation
-- DateTimePicker
+- DateTimePicker (iOS, android)
 - Calling APIs
 - Navigation
 - QR Scan
-- Load QR from libraries
 - Lokalisation
 - Storing data after killing app
-- Global styles like fontFamily
+- Global styles (fontFamily)
+- Svg
 - Gradient
 
 ### Demo note

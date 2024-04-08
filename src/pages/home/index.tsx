@@ -4,8 +4,9 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { FC, useCallback } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Alert, Dimensions, Platform, ScrollView, Text, View } from 'react-native';
+import { Alert, Dimensions, Platform, Pressable, ScrollView, Text, View } from 'react-native';
 
+import SettingsIcon from '../../../assets/icons/settings.svg';
 import { ClinicLocations } from './fixtures';
 import { contentStyles, headerStyles, screenStyles } from './styled';
 import { Screen } from '../../common/constants';
@@ -31,6 +32,11 @@ export type InputForm = {
 SplashScreen.preventAutoHideAsync();
 
 const Home: FC<IHomeProps> = ({ navigation }) => {
+  const minimumDate = dayjs().add(1, 'day').toDate();
+  const maximumDate = dayjs().add(15, 'days').toDate();
+  const minimumTime = dayjs().startOf('day').add(7, 'hour').toDate();
+  const maximumTime = dayjs().startOf('day').add(18, 'hour').toDate();
+
   const { control, handleSubmit } = useForm<InputForm>({
     reValidateMode: 'onSubmit',
     defaultValues: {
@@ -74,6 +80,11 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
   const renderHeader = () => {
     return (
       <View style={headerStyles.container}>
+        <Pressable
+          style={headerStyles.settingsContainer}
+          onPress={() => navigation.push(Screen.SETTINGS)}>
+          <SettingsIcon />
+        </Pressable>
         <View style={headerStyles.headerCircleTopRight} />
         <View style={headerStyles.headerCircleBottomLeft} />
         <View style={headerStyles.headerTitleContainer}>
@@ -95,8 +106,8 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
               mode="date"
               label="Date"
               value={field.value}
-              minimumDate={dayjs().add(1, 'day').toDate()}
-              maximumDate={dayjs().add(15, 'days').toDate()}
+              minimumDate={minimumDate}
+              maximumDate={maximumDate}
               onChange={field.onChange}
             />
           )}
@@ -109,8 +120,8 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
               mode="time"
               label="Time"
               value={field.value}
-              minimumDate={dayjs().startOf('day').add(7, 'hour').toDate()}
-              maximumDate={dayjs().startOf('day').add(18, 'hour').toDate()}
+              minimumDate={minimumTime}
+              maximumDate={maximumTime}
               minuteInterval={30}
               onChange={field.onChange}
             />
@@ -131,6 +142,8 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
               mode="date"
               label="Date"
               value={field.value}
+              minimumDate={minimumDate}
+              maximumDate={maximumDate}
               onChange={field.onChange}
             />
           )}
@@ -143,6 +156,8 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
               mode="time"
               label="Time"
               value={field.value}
+              minimumDate={minimumTime}
+              maximumDate={maximumTime}
               onChange={field.onChange}
             />
           )}
