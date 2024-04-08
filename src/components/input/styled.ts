@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { Color, FontSize, Spacing } from '../../common/constants';
+import { Color, Element, FontSize, Spacing } from '../../common/constants';
 
 export const styles = StyleSheet.create({
   container: {
@@ -15,12 +15,12 @@ export const styles = StyleSheet.create({
     fontSize: FontSize.Md,
   },
   input: {
-    height: 48,
+    height: Element.HEIGHT,
     borderWidth: 2,
     borderStyle: 'solid',
     borderColor: '#a3ffd1',
     backgroundColor: '#e1f7ec',
-    borderRadius: 6,
+    borderRadius: Element.BORDER_RADIUS,
     marginTop: 6,
     paddingHorizontal: 12,
   },

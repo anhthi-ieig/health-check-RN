@@ -4,14 +4,14 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { FC, useCallback } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Alert, Dimensions, ScrollView, Text, View } from 'react-native';
+import { Alert, Dimensions, Platform, ScrollView, Text, View } from 'react-native';
 
 import { ClinicLocations } from './fixtures';
 import { contentStyles, headerStyles, screenStyles } from './styled';
 import { Screen } from '../../common/constants';
 import { HcBottomSheet, HcBottomSheetItem } from '../../components/bottom-sheet';
 import { HcButton } from '../../components/button';
-import { HcDateTimePicker } from '../../components/date-time-picker';
+import { HcDateTimePickerAndroid, HcDateTimePickerIOS } from '../../components/date-time-picker';
 import { HcInput } from '../../components/input';
 import { createBooking, transformBookingInfo } from '../api/create-booking';
 
@@ -84,6 +84,73 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
     );
   };
 
+  const renderDateTimePickerForIOS = () => {
+    return (
+      <>
+        <Controller
+          name="date"
+          control={control}
+          render={({ field }) => (
+            <HcDateTimePickerIOS
+              mode="date"
+              label="Date"
+              value={field.value}
+              minimumDate={dayjs().add(1, 'day').toDate()}
+              maximumDate={dayjs().add(15, 'days').toDate()}
+              onChange={field.onChange}
+            />
+          )}
+        />
+        <Controller
+          name="time"
+          control={control}
+          render={({ field }) => (
+            <HcDateTimePickerIOS
+              mode="time"
+              label="Time"
+              value={field.value}
+              minimumDate={dayjs().startOf('day').add(7, 'hour').toDate()}
+              maximumDate={dayjs().startOf('day').add(18, 'hour').toDate()}
+              minuteInterval={30}
+              onChange={field.onChange}
+            />
+          )}
+        />
+      </>
+    );
+  };
+
+  const renderDateTimePickerForAndroid = () => {
+    return (
+      <>
+        <Controller
+          name="date"
+          control={control}
+          render={({ field }) => (
+            <HcDateTimePickerAndroid
+              mode="date"
+              label="Date"
+              value={field.value}
+              onChange={field.onChange}
+            />
+          )}
+        />
+        <Controller
+          name="time"
+          control={control}
+          render={({ field }) => (
+            <HcDateTimePickerAndroid
+              mode="time"
+              label="Time"
+              value={field.value}
+              onChange={field.onChange}
+            />
+          )}
+        />
+      </>
+    );
+  };
+
   const renderContent = () => {
     return (
       <ScrollView contentContainerStyle={{ width: Dimensions.get('window').width, flexGrow: 1 }}>
@@ -128,35 +195,9 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
             )}
           />
           <View style={contentStyles.dateTimeContainer}>
-            <Controller
-              name="date"
-              control={control}
-              render={({ field }) => (
-                <HcDateTimePicker
-                  mode="date"
-                  label="Date"
-                  value={field.value}
-                  minimumDate={dayjs().add(1, 'day').toDate()}
-                  maximumDate={dayjs().add(15, 'days').toDate()}
-                  onChange={field.onChange}
-                />
-              )}
-            />
-            <Controller
-              name="time"
-              control={control}
-              render={({ field }) => (
-                <HcDateTimePicker
-                  mode="time"
-                  label="Time"
-                  value={field.value}
-                  minimumDate={dayjs().startOf('day').add(7, 'hour').toDate()}
-                  maximumDate={dayjs().startOf('day').add(18, 'hour').toDate()}
-                  minuteInterval={30}
-                  onChange={field.onChange}
-                />
-              )}
-            />
+            {Platform.OS === 'ios'
+              ? renderDateTimePickerForIOS()
+              : renderDateTimePickerForAndroid()}
           </View>
           {renderCtaContainer()}
         </View>

@@ -9,6 +9,11 @@ export enum Spacing {
   BETWEEN_ELEMENTS = 25,
 }
 
+export enum Element {
+  HEIGHT = 48,
+  BORDER_RADIUS = 6,
+}
+
 export enum Color {
   PRIMARY = '#10ac84',
   PRIMARY_LIGHT = '#1dd1a1',

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import { Linking } from 'react-native';
 
-import Details from './index';
+import Details from '../index';
 
 describe('Details Page', () => {
   const mockGoback = jest.fn();
@@ -17,6 +17,7 @@ describe('Details Page', () => {
       time: '2024-04-09 10:09',
     },
   };
+
   jest.mock('react-native/Libraries/Linking/Linking', () => ({
     openURL: jest.fn(() => Promise.resolve('mockResolve')),
   }));

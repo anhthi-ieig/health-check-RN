@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { Color, FontSize, Spacing } from '../../common/constants';
+import { Color, Element, FontSize, Spacing } from '../../common/constants';
 
 export const styles = StyleSheet.create({
   container: {
@@ -15,7 +15,19 @@ export const styles = StyleSheet.create({
     fontSize: FontSize.Md,
     marginBottom: 6,
   },
-  dateTimePicker: {
+  dateTimePickerIOS: {
     marginLeft: -10,
+  },
+  dateTimePickerAndroid: {
+    height: Element.HEIGHT,
+    backgroundColor: Color.PRIMARY,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 14,
+    borderRadius: Element.BORDER_RADIUS,
+  },
+  dateTimePickerAndroidText: {
+    color: Color.WHITE,
   },
 });
