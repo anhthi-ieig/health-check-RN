@@ -4,7 +4,7 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { FC, useCallback } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Dimensions, ScrollView, Text, View } from 'react-native';
+import { Alert, Dimensions, ScrollView, Text, View } from 'react-native';
 
 import { ClinicLocations } from './fixtures';
 import { contentStyles, headerStyles, screenStyles } from './styled';
@@ -25,6 +25,7 @@ export type InputForm = {
   location: HcBottomSheetItem;
   date: Date;
   time: Date;
+  isCheckedIn: boolean;
 };
 
 SplashScreen.preventAutoHideAsync();
@@ -57,14 +58,15 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
   }
 
   const handleFormSubmit = (data: InputForm) => {
-    console.log('data:', data);
-    console.log(dayjs(data.date).format('YYYY-MM-DD'));
-    console.log(dayjs(data.time).format('HH:mm'));
     createBooking(transformBookingInfo(data))
       .then((resp) => {
-        if (resp?.id) navigation.navigate(Screen.DETAILS, resp);
+        if (resp?.id) {
+          Alert.alert('The booking was received. Please checkout the details');
+          navigation.navigate(Screen.DETAILS, resp);
+        }
       })
       .catch((err) => {
+        Alert.alert('Something went wrong');
         console.log('err:', err);
       });
   };
