@@ -13,16 +13,13 @@ export interface BookingInfo {
 }
 
 export const createBooking = async (bookingInfo: BookingInfo): Promise<BookingInfo> => {
-  const response = await fetch(
-    'https://6612a1f253b0d5d80f660d6e.mockapi.io/health-check/create-booking',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(bookingInfo),
+  const response = await fetch('https://6612a1f253b0d5d80f660d6e.mockapi.io/health-check/booking', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
     },
-  );
+    body: JSON.stringify(bookingInfo),
+  });
   return response.json();
 };
 
