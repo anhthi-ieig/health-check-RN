@@ -61,3 +61,8 @@ export enum zIndex {
   z800 = 800,
   z900 = 900,
 }
+
+export enum Locale {
+  EN = 'en',
+  VN = 'vn',
+}

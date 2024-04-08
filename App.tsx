@@ -7,12 +7,33 @@ import Details from './src/pages/details';
 import Home from './src/pages/home';
 import ScanQR from './src/pages/scan-qr';
 import { Settings } from './src/pages/settings';
+import { useFonts } from 'expo-font';
+import { useCallback } from 'react';
+import * as SplashScreen from 'expo-splash-screen';
+import { initI18n } from './src/utils/i18n';
 
 const Stack = createNativeStackNavigator();
+SplashScreen.preventAutoHideAsync();
+initI18n();
 
 export default function App() {
+  const [fontsLoaded, fontError] = useFonts({
+    Comfortaa: require('./assets/fonts/Comfortaa.ttf'),
+    Pacifico: require('./assets/fonts/Pacifico.ttf'),
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded || fontError) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, fontError]);
+
+  if (!fontsLoaded && !fontError) {
+    return null;
+  }
+
   return (
-    <GestureHandlerRootView style={{ flex: 1, width: '100%' }}>
+    <GestureHandlerRootView style={{ flex: 1, width: '100%' }} onLayout={onLayoutRootView}>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name={Screen.HOME} component={Home} options={{ headerShown: false }} />

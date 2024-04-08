@@ -7,6 +7,7 @@ import SuccessIcon from '../../../assets/icons/success.svg';
 import { FontSize } from '../../common/constants';
 import { HcHeader } from '../../components/header';
 import { HcText } from '../../components/text';
+import { i18n, localeKey } from '../../utils/i18n';
 
 interface ScanQRData {
   name: string;
@@ -40,11 +41,11 @@ const ScanQR: FC<IScanQRProps> = ({ navigation }) => {
 
   const renderContent = () => {
     if (permission?.status === PermissionStatus.UNDETERMINED) {
-      return <HcText>Requesting for camera permission</HcText>;
+      return <HcText>{i18n.t(localeKey.scanQR_content_requesting_for_camera_permission)}</HcText>;
     }
 
     if (permission?.status === PermissionStatus.DENIED) {
-      return <HcText>No access to camera</HcText>;
+      return <HcText>{i18n.t(localeKey.scanQR_content_no_access_to_camera)}</HcText>;
     }
 
     if (scannedData) {
@@ -52,23 +53,29 @@ const ScanQR: FC<IScanQRProps> = ({ navigation }) => {
         <View style={styles.checkedInContainer}>
           <SuccessIcon />
           <HcText variant={FontSize.Lg} style={styles.checkinTitle}>
-            Checked in the{' '}
+            {i18n.t(localeKey.scanQR_content_checked_in_the)}{' '}
             <HcText variant={FontSize.Xl} style={styles.clinicName}>
               {scannedData.name}
             </HcText>
           </HcText>
-          <HcText style={styles.checkinSubTitle}>at {scannedData.location}</HcText>
+          <HcText style={styles.checkinSubTitle}>
+            {i18n.t(localeKey.common_at)} {scannedData.location}
+          </HcText>
         </View>
       );
     }
 
     return (
       <>
-        <HcText style={styles.instructionTitle}>Scan the clinic QR code to checkin</HcText>
+        <HcText style={styles.instructionTitle}>
+          {i18n.t(localeKey.scanQR_content_scan_the_qr_code_to_checkin)}
+        </HcText>
         <Camera style={styles.camera} type={type} onBarCodeScanned={handleBarCodeScanned}>
           <View style={styles.flipButtonContainer}>
             <TouchableOpacity style={styles.flipButton} onPress={toggleCameraType}>
-              <Text style={styles.flipButtonText}>Flip Camera</Text>
+              <Text style={styles.flipButtonText}>
+                {i18n.t(localeKey.scanQR_content_flip_camera)}
+              </Text>
             </TouchableOpacity>
           </View>
         </Camera>
@@ -78,7 +85,7 @@ const ScanQR: FC<IScanQRProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <HcHeader label="Scan QR" onBack={() => navigation.goBack()} />
+      <HcHeader label={i18n.t(localeKey.scanQR_header_title)} onBack={() => navigation.goBack()} />
       <View style={styles.contentContainer}>{renderContent()}</View>
     </View>
   );

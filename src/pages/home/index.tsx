@@ -1,8 +1,6 @@
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import dayjs from 'dayjs';
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-import { FC, useCallback } from 'react';
+import { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Alert, Dimensions, Platform, Pressable, ScrollView, Text, View } from 'react-native';
 
@@ -15,6 +13,7 @@ import { HcButton } from '../../components/button';
 import { HcDateTimePickerAndroid, HcDateTimePickerIOS } from '../../components/date-time-picker';
 import { HcInput } from '../../components/input';
 import { createBooking, transformBookingInfo } from '../api/create-booking';
+import { i18n, localeKey } from '../../utils/i18n';
 
 interface IHomeProps {
   navigation: any;
@@ -28,8 +27,6 @@ export type InputForm = {
   time: Date;
   isCheckedIn: boolean;
 };
-
-SplashScreen.preventAutoHideAsync();
 
 const Home: FC<IHomeProps> = ({ navigation }) => {
   const minimumDate = dayjs().add(1, 'day').toDate();
@@ -48,31 +45,16 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
     },
   });
 
-  const [fontsLoaded, fontError] = useFonts({
-    Comfortaa: require('../../../assets/fonts/Comfortaa.ttf'),
-    Pacifico: require('../../../assets/fonts/Pacifico.ttf'),
-  });
-
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded || fontError) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, fontError]);
-
-  if (!fontsLoaded && !fontError) {
-    return null;
-  }
-
   const handleFormSubmit = (data: InputForm) => {
     createBooking(transformBookingInfo(data))
       .then((resp) => {
         if (resp?.id) {
-          Alert.alert('The booking was received. Please checkout the details');
+          Alert.alert(i18n.t(localeKey.home_form_book_success_msg));
           navigation.navigate(Screen.DETAILS, resp);
         }
       })
       .catch((err) => {
-        Alert.alert('Something went wrong');
+        Alert.alert(i18n.t(localeKey.validation_something_went_wrong));
         console.log('err:', err);
       });
   };
@@ -89,7 +71,7 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
         <View style={headerStyles.headerCircleBottomLeft} />
         <View style={headerStyles.headerTitleContainer}>
           <Text style={headerStyles.headerTitle}>Jio Health</Text>
-          <Text style={headerStyles.headerSubTitle}>Achieve Optimal Wellness</Text>
+          <Text style={headerStyles.headerSubTitle}>{i18n.t(localeKey.home_header_slogan)}</Text>
         </View>
       </View>
     );
@@ -104,7 +86,7 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
           render={({ field }) => (
             <HcDateTimePickerIOS
               mode="date"
-              label="Date"
+              label={i18n.t(localeKey.home_form_date)}
               value={field.value}
               minimumDate={minimumDate}
               maximumDate={maximumDate}
@@ -118,7 +100,7 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
           render={({ field }) => (
             <HcDateTimePickerIOS
               mode="time"
-              label="Time"
+              label={i18n.t(localeKey.home_form_time)}
               value={field.value}
               minimumDate={minimumTime}
               maximumDate={maximumTime}
@@ -140,7 +122,7 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
           render={({ field }) => (
             <HcDateTimePickerAndroid
               mode="date"
-              label="Date"
+              label={i18n.t(localeKey.home_form_date)}
               value={field.value}
               minimumDate={minimumDate}
               maximumDate={maximumDate}
@@ -154,7 +136,7 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
           render={({ field }) => (
             <HcDateTimePickerAndroid
               mode="time"
-              label="Time"
+              label={i18n.t(localeKey.home_form_time)}
               value={field.value}
               minimumDate={minimumTime}
               maximumDate={maximumTime}
@@ -173,10 +155,10 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
           <Controller
             name="name"
             control={control}
-            rules={{ required: 'This is required' }}
+            rules={{ required: i18n.t(localeKey.validation_required) }}
             render={({ field, fieldState }) => (
               <HcInput
-                label="Name"
+                label={i18n.t(localeKey.home_form_name)}
                 value={field.value}
                 onChange={field.onChange}
                 error={fieldState.error?.message}
@@ -186,10 +168,10 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
           <Controller
             name="phone"
             control={control}
-            rules={{ required: 'This is required' }}
+            rules={{ required: i18n.t(localeKey.validation_required) }}
             render={({ field, fieldState }) => (
               <HcInput
-                label="Phone"
+                label={i18n.t(localeKey.home_form_phone)}
                 value={field.value}
                 onChange={field.onChange}
                 error={fieldState.error?.message}
@@ -201,8 +183,8 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
             control={control}
             render={({ field }) => (
               <HcBottomSheet
-                label="Location"
-                bottomSheetViewLabel="Choose a location"
+                label={i18n.t(localeKey.home_form_location)}
+                bottomSheetViewLabel={i18n.t(localeKey.home_form_choose_a_location)}
                 items={ClinicLocations}
                 value={field.value}
                 onSelectItem={field.onChange}
@@ -224,13 +206,13 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
     return (
       <View style={contentStyles.ctaContainer}>
         <HcButton
-          title="Book"
+          title={i18n.t(localeKey.home_form_book)}
           type="Primary"
           onPress={handleSubmit(handleFormSubmit)}
           style={contentStyles.bookButton}
         />
         <HcButton
-          title="Checkin"
+          title={i18n.t(localeKey.home_form_checkin)}
           type="Normal"
           onPress={() => {
             navigation.push(Screen.SCAN_QR);
@@ -243,7 +225,7 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
 
   return (
     <BottomSheetModalProvider>
-      <View style={screenStyles.container} onLayout={onLayoutRootView}>
+      <View style={screenStyles.container}>
         {renderHeader()}
         {renderContent()}
       </View>
