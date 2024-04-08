@@ -2,8 +2,8 @@ import { FC } from 'react';
 import { TextInput, View } from 'react-native';
 
 import { styles } from './styled';
-import { HcText } from '../text';
 import { FontSize } from '../../common/constants';
+import { HcText } from '../text';
 
 interface IHcInputProps {
   label: string;
