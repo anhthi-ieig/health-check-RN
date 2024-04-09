@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
   },
   contentContainer: {
     height: 500,
-    paddingTop: 40,
     paddingHorizontal: 10,
   },
   instructionTitle: {

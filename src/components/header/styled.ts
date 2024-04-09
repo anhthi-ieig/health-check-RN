@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
     alignItems: 'flex-end',
     paddingBottom: 32,
     paddingHorizontal: 20,
+    marginBottom: 30,
   },
   headerLrContainer: {
     width: 80,

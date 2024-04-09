@@ -1,7 +1,8 @@
 import { Picker } from '@react-native-picker/picker';
 import { FC, useState } from 'react';
-import { View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
+import { styles } from './styled';
 import { Locale } from '../../common/constants';
 import { HcHeader } from '../../components/header';
 import { HcText } from '../../components/text';
@@ -20,16 +21,21 @@ export const Settings: FC<ISettingsProps> = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <ScrollView>
       <HcHeader
         label={i18n.t(localeKey.settings_header_title)}
         onBack={() => navigation.goBack()}
       />
-      <HcText>{i18n.t(localeKey.settings_content_language)}</HcText>
-      <Picker selectedValue={selectedLang} onValueChange={handleLanguageChange}>
-        <Picker.Item label="English" value={Locale.EN} />
-        <Picker.Item label="Vietnam" value={Locale.VN} />
-      </Picker>
-    </View>
+      <View style={styles.container}>
+        <HcText>{i18n.t(localeKey.settings_content_language)}</HcText>
+        <Picker
+          selectedValue={selectedLang}
+          onValueChange={handleLanguageChange}
+          style={styles.langPicker}>
+          <Picker.Item label="English" value={Locale.EN} />
+          <Picker.Item label="Vietnam" value={Locale.VN} />
+        </Picker>
+      </View>
+    </ScrollView>
   );
 };

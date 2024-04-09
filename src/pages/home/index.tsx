@@ -1,7 +1,7 @@
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { useFocusEffect } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import dayjs from 'dayjs';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Alert, Dimensions, Platform, Pressable, ScrollView, Text, View } from 'react-native';
 
@@ -30,18 +30,18 @@ export type InputForm = {
 };
 
 const Home: FC<IHomeProps> = ({ navigation }) => {
-  const [isFocus, setIsFocus] = useState(false);
+  const isFocused = useIsFocused();
+  const [_, setIsFocus] = useState(false);
   const minimumDate = dayjs().add(1, 'day').toDate();
   const maximumDate = dayjs().add(15, 'days').toDate();
   const minimumTime = dayjs().startOf('day').add(7, 'hour').toDate();
   const maximumTime = dayjs().startOf('day').add(18, 'hour').toDate();
 
-  useFocusEffect(() => {
-    setIsFocus(true);
-    console.log('runs');
-  });
-
-  console.log('re-render', i18n.locale, isFocus);
+  useEffect(() => {
+    if (isFocused) {
+      setIsFocus(true);
+    }
+  }, [isFocused]);
 
   const { control, handleSubmit } = useForm<InputForm>({
     reValidateMode: 'onSubmit',
