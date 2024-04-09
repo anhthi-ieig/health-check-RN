@@ -1,12 +1,13 @@
 import { Picker } from '@react-native-picker/picker';
 import { FC, useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { Platform, ScrollView, View } from 'react-native';
 
 import { styles } from './styled';
-import { Locale } from '../../common/constants';
+import { Locale, StorageKey } from '../../common/constants';
 import { HcHeader } from '../../components/header';
 import { HcText } from '../../components/text';
 import { i18n, localeKey } from '../../utils/i18n';
+import { storeData } from '../../utils/storage';
 
 interface ISettingsProps {
   navigation: any;
@@ -15,9 +16,13 @@ interface ISettingsProps {
 export const Settings: FC<ISettingsProps> = ({ navigation }) => {
   const [selectedLang, setSelectedLang] = useState<Locale>(i18n.locale as Locale);
 
-  const handleLanguageChange = (value: Locale) => {
-    i18n.locale = value;
-    setSelectedLang(value);
+  const handleLanguageChange = (lang: Locale) => {
+    i18n.locale = lang;
+    setSelectedLang(lang);
+
+    (async () => {
+      await storeData(StorageKey.LANG, lang);
+    })();
   };
 
   return (
@@ -31,7 +36,7 @@ export const Settings: FC<ISettingsProps> = ({ navigation }) => {
         <Picker
           selectedValue={selectedLang}
           onValueChange={handleLanguageChange}
-          style={styles.langPicker}>
+          style={Platform.OS === 'ios' ? styles.langPickerIOS : styles.langPickerAndroid}>
           <Picker.Item label="English" value={Locale.EN} />
           <Picker.Item label="Vietnam" value={Locale.VN} />
         </Picker>

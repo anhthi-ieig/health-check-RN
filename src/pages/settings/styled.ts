@@ -8,7 +8,11 @@ export const styles = StyleSheet.create({
     position: 'relative',
     paddingHorizontal: Spacing.PADDING_HORIZONTAL,
   },
-  langPicker: {
+  langPickerIOS: {
     marginTop: -30,
+  },
+  langPickerAndroid: {
+    width: '80%',
+    marginLeft: 20,
   },
 });

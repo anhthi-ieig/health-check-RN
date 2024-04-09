@@ -18,45 +18,25 @@ const Details: FC<IDetailsProps> = ({ route, navigation }) => {
       <HcHeader label={i18n.t(localeKey.details_header_title)} onBack={() => navigation.goBack()} />
       <View style={styles.body}>
         <View style={styles.bodyRow}>
-          <View style={styles.column}>
-            <HcText>{i18n.t(localeKey.details_content_name)}</HcText>
-          </View>
-
-          <View style={styles.column}>
-            <HcText>{name}</HcText>
-          </View>
+          <HcText>{i18n.t(localeKey.details_content_name)}</HcText>
+          <HcText>{name}</HcText>
         </View>
 
         <View style={styles.bodyRow}>
-          <View style={styles.column}>
-            <HcText>{i18n.t(localeKey.home_form_phone)}</HcText>
-          </View>
+          <HcText>{i18n.t(localeKey.home_form_phone)}</HcText>
+          <HcText>{phone}</HcText>
+        </View>
 
-          <View style={styles.column}>
-            <HcText>{phone}</HcText>
-          </View>
+        <View style={{ ...styles.bodyRow, flexDirection: 'column', alignItems: 'flex-start' }}>
+          <HcText>{i18n.t(localeKey.details_content_location)}</HcText>
+          <HcText>{location}</HcText>
         </View>
 
         <View style={styles.bodyRow}>
-          <View style={styles.column}>
-            <HcText>{i18n.t(localeKey.details_content_location)}</HcText>
-          </View>
-
-          <View style={styles.column}>
-            <HcText>{location}</HcText>
-          </View>
-        </View>
-
-        <View style={styles.bodyRow}>
-          <View style={styles.column}>
-            <HcText>{i18n.t(localeKey.details_content_time)}</HcText>
-          </View>
-
-          <View style={styles.column}>
-            <HcText>
-              {date} {time}
-            </HcText>
-          </View>
+          <HcText>{i18n.t(localeKey.details_content_time)}</HcText>
+          <HcText>
+            {date} {time}
+          </HcText>
         </View>
       </View>
       <View style={styles.helperMessage}>

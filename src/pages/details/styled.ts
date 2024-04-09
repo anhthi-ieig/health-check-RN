@@ -24,10 +24,6 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     marginBottom: 16,
   },
-  column: {
-    flexDirection: 'row',
-    // flex: 1,
-  },
   helperMessage: {
     flex: 1,
     paddingHorizontal: 20,

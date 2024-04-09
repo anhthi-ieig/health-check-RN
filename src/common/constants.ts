@@ -66,3 +66,7 @@ export enum Locale {
   EN = 'en',
   VN = 'vn',
 }
+
+export enum StorageKey {
+  LANG = 'lang',
+}

@@ -8,13 +8,13 @@ import { Alert, Dimensions, Platform, Pressable, ScrollView, Text, View } from '
 import { ClinicLocations } from './fixtures';
 import { contentStyles, headerStyles, screenStyles } from './styled';
 import SettingsIcon from '../../../assets/icons/settings.svg';
+import { createBooking, transformBookingInfo } from '../../api/booking';
 import { Screen } from '../../common/constants';
 import { HcBottomSheet, HcBottomSheetItem } from '../../components/bottom-sheet';
 import { HcButton } from '../../components/button';
 import { HcDateTimePickerAndroid, HcDateTimePickerIOS } from '../../components/date-time-picker';
 import { HcInput } from '../../components/input';
 import { i18n, localeKey } from '../../utils/i18n';
-import { createBooking, transformBookingInfo } from '../api/create-booking';
 
 interface IHomeProps {
   navigation: any;
@@ -37,13 +37,7 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
   const minimumTime = dayjs().startOf('day').add(7, 'hour').toDate();
   const maximumTime = dayjs().startOf('day').add(18, 'hour').toDate();
 
-  useEffect(() => {
-    if (isFocused) {
-      setIsFocus(true);
-    }
-  }, [isFocused]);
-
-  const { control, handleSubmit } = useForm<InputForm>({
+  const { control, clearErrors, handleSubmit, reset } = useForm<InputForm>({
     reValidateMode: 'onSubmit',
     defaultValues: {
       name: '',
@@ -53,6 +47,14 @@ const Home: FC<IHomeProps> = ({ navigation }) => {
       time: new Date(),
     },
   });
+
+  useEffect(() => {
+    if (isFocused) {
+      reset();
+      clearErrors();
+      setIsFocus(true);
+    }
+  }, [isFocused]);
 
   const handleFormSubmit = (data: InputForm) => {
     createBooking(transformBookingInfo(data))

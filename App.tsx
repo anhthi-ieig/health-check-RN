@@ -5,16 +5,20 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useCallback } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import { Screen } from './src/common/constants';
+import { Screen, StorageKey } from './src/common/constants';
 import Details from './src/pages/details';
 import Home from './src/pages/home';
 import ScanQR from './src/pages/scan-qr';
 import { Settings } from './src/pages/settings';
 import { initI18n } from './src/utils/i18n';
+import { getData } from './src/utils/storage';
 
 const Stack = createNativeStackNavigator();
 SplashScreen.preventAutoHideAsync();
-initI18n();
+(async () => {
+  const storedLang = await getData(StorageKey.LANG);
+  initI18n(storedLang);
+})();
 
 export default function App() {
   const [fontsLoaded, fontError] = useFonts({

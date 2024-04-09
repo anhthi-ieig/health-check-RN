@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import { InputForm } from '../home';
+import { InputForm } from '../pages/home';
 
 export interface BookingInfo {
   id?: number;
