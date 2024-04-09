@@ -20,7 +20,7 @@
 
 ### Demo note
 
-- Press call in detail pages(contact number) only work on real device.
+- Some feature can only work on real device not simulator like press call in detail pages(contact number), camera when in scan QR page
 
 ### Generate QR code
 
