@@ -1,5 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+import { useCallback } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { Screen } from './src/common/constants';
@@ -7,9 +10,6 @@ import Details from './src/pages/details';
 import Home from './src/pages/home';
 import ScanQR from './src/pages/scan-qr';
 import { Settings } from './src/pages/settings';
-import { useFonts } from 'expo-font';
-import { useCallback } from 'react';
-import * as SplashScreen from 'expo-splash-screen';
 import { initI18n } from './src/utils/i18n';
 
 const Stack = createNativeStackNavigator();

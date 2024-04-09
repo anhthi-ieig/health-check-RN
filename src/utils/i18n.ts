@@ -1,9 +1,9 @@
 import { getLocales } from 'expo-localization';
 import { I18n } from 'i18n-js';
 
+import { Locale } from '../common/constants';
 import { enLang } from '../locales/en';
 import { vnLang } from '../locales/vn';
-import { Locale } from '../common/constants';
 
 export const getDeviceLanguage = (): string => getLocales()[0].languageCode || Locale.EN;
 

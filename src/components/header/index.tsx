@@ -2,8 +2,8 @@ import { FC } from 'react';
 import { Pressable, View } from 'react-native';
 
 import { styles } from './styled';
-import { HcText } from '../text';
 import { i18n, localeKey } from '../../utils/i18n';
+import { HcText } from '../text';
 
 interface HcHeaderProps {
   label: string;

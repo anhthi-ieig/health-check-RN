@@ -13,6 +13,11 @@
 - Svg
 - Gradient
 
+### Faced issues
+
+- DateTimePicker applies 2 approach for iOS and Android
+- Screen doesn't remount when navigation back
+
 ### Demo note
 
 - Press call in detail pages(contact number) only work on real device.

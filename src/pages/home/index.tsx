@@ -1,19 +1,20 @@
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { useFocusEffect } from '@react-navigation/native';
 import dayjs from 'dayjs';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Alert, Dimensions, Platform, Pressable, ScrollView, Text, View } from 'react-native';
 
-import SettingsIcon from '../../../assets/icons/settings.svg';
 import { ClinicLocations } from './fixtures';
 import { contentStyles, headerStyles, screenStyles } from './styled';
+import SettingsIcon from '../../../assets/icons/settings.svg';
 import { Screen } from '../../common/constants';
 import { HcBottomSheet, HcBottomSheetItem } from '../../components/bottom-sheet';
 import { HcButton } from '../../components/button';
 import { HcDateTimePickerAndroid, HcDateTimePickerIOS } from '../../components/date-time-picker';
 import { HcInput } from '../../components/input';
-import { createBooking, transformBookingInfo } from '../api/create-booking';
 import { i18n, localeKey } from '../../utils/i18n';
+import { createBooking, transformBookingInfo } from '../api/create-booking';
 
 interface IHomeProps {
   navigation: any;
@@ -29,10 +30,18 @@ export type InputForm = {
 };
 
 const Home: FC<IHomeProps> = ({ navigation }) => {
+  const [isFocus, setIsFocus] = useState(false);
   const minimumDate = dayjs().add(1, 'day').toDate();
   const maximumDate = dayjs().add(15, 'days').toDate();
   const minimumTime = dayjs().startOf('day').add(7, 'hour').toDate();
   const maximumTime = dayjs().startOf('day').add(18, 'hour').toDate();
+
+  useFocusEffect(() => {
+    setIsFocus(true);
+    console.log('runs');
+  });
+
+  console.log('re-render', i18n.locale, isFocus);
 
   const { control, handleSubmit } = useForm<InputForm>({
     reValidateMode: 'onSubmit',

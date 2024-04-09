@@ -4,6 +4,7 @@ import { Linking, Pressable, ScrollView, View } from 'react-native';
 import { styles } from './styled';
 import { HcHeader } from '../../components/header';
 import { HcText } from '../../components/text';
+import { i18n, localeKey } from '../../utils/i18n';
 
 interface IDetailsProps {
   route: any;
@@ -14,11 +15,11 @@ const Details: FC<IDetailsProps> = ({ route, navigation }) => {
   const { name, phone, location, date, time } = route.params;
   return (
     <ScrollView style={styles.container}>
-      <HcHeader label="Booking Details" onBack={() => navigation.goBack()} />
+      <HcHeader label={i18n.t(localeKey.details_header_title)} onBack={() => navigation.goBack()} />
       <View style={styles.body}>
         <View style={styles.bodyRow}>
           <View style={styles.column}>
-            <HcText>Name</HcText>
+            <HcText>{i18n.t(localeKey.details_content_name)}</HcText>
           </View>
 
           <View style={styles.column}>
@@ -28,7 +29,7 @@ const Details: FC<IDetailsProps> = ({ route, navigation }) => {
 
         <View style={styles.bodyRow}>
           <View style={styles.column}>
-            <HcText>Phone</HcText>
+            <HcText>{i18n.t(localeKey.home_form_phone)}</HcText>
           </View>
 
           <View style={styles.column}>
@@ -38,7 +39,7 @@ const Details: FC<IDetailsProps> = ({ route, navigation }) => {
 
         <View style={styles.bodyRow}>
           <View style={styles.column}>
-            <HcText>Location</HcText>
+            <HcText>{i18n.t(localeKey.details_content_location)}</HcText>
           </View>
 
           <View style={styles.column}>
@@ -48,7 +49,7 @@ const Details: FC<IDetailsProps> = ({ route, navigation }) => {
 
         <View style={styles.bodyRow}>
           <View style={styles.column}>
-            <HcText>Time</HcText>
+            <HcText>{i18n.t(localeKey.details_content_time)}</HcText>
           </View>
 
           <View style={styles.column}>
@@ -60,17 +61,14 @@ const Details: FC<IDetailsProps> = ({ route, navigation }) => {
       </View>
       <View style={styles.helperMessage}>
         <HcText style={styles.helperMessageText}>
-          The clinic will not hold appointments if customers arrive more than 15 minutes late.
-          Clinic staff will assist customers in scheduling a new appointment if they arrive late or
-          do not show up for their scheduled appointment. Please arrive on time so that we can
-          provide you with the best service. For further details, please contact
+          {i18n.t(localeKey.details_content_notes_1)}
           <Pressable
             onPress={() => {
               Linking.openURL('tel:02477755557');
             }}>
             <HcText style={styles.phone}> 02477755557 </HcText>
           </Pressable>
-          for assistance. We look forward to welcoming you to Jio Smart Clinic.
+          {i18n.t(localeKey.details_content_notes_2)}
         </HcText>
       </View>
     </ScrollView>
